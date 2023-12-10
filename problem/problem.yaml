@@ -1,0 +1,14 @@
+_target_: problem.problem.Problem
+name: problem
+
+start_state: [10, 30]
+goal_state: [150, 150]
+state_dim: 2
+
+num_steps: 10
+min_velocity: -0.4
+max_velocity: .4
+min_state: -3.1
+max_state: 3.1
+
+min_dist: 0.5

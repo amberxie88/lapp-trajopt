@@ -1,0 +1,24 @@
+_target_: solver.trajopt.TrajOpt
+name: trajopt
+
+# TrajOpt Hyperparameters
+mu_0: 2 # initial_penalty_coefficient
+s_0: 0.1 # initial_trust_size_region
+c: 0.9 # step_acceptance_parameter
+tau_plus: 1.01 # trust_region_expansion
+tau_minus: 0.5 # trust_region_shrinkage
+k: 10 # penalty_scaling
+ftol: 1e-4 # convergence_threshold_for_merit
+xtol: 1e-4 # convergence_threshold_for_x
+ctol: 1e-2 # constraint_satisfaction_threshold
+
+# Convex Optimization Parameters
+solver: ECOS # ECOS, CVXOPT, SCS, ECOS_BB
+penalty_max_iteration: 5 # 100
+convexify_max_iteration: 2 # 100 
+trust_max_iteration: 2 # 100
+
+# Additional
+min_trust_box_size: 1e-4
+use_collision: true # additional penalty
+d_check: 0.5 # farther away than 40 -> don't add to penalty

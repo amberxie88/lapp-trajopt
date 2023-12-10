@@ -1,0 +1,47 @@
+defaults:
+  - problem: problem
+  - solver: trajopt
+  - laco_model: lang_attention_model
+  - override hydra/launcher: submitit_local
+
+# experiment
+experiment_folder: test
+experiment_name: test
+
+# environment
+env_name: pyrep_shapenet
+env_cfg: /PATH/TO/CFG
+camera: [zoom]
+radius: 0.20
+shapenet_to_generate: [bus]
+n_objects_min: 1
+n_objects_max: 
+scaling: 0.35
+restore_laco_snapshot_path: /PATH/TO/SNAPSHOT
+
+# misc
+seed: 0
+device: 0 
+use_tb: true
+use_wandb: false
+
+# for laco_model
+use_mv: false
+lr: 1e-3 # not used
+PER_min: 0
+PER_max: 1
+
+hydra:
+  run:
+    dir: ./experiments/${experiment_folder}/${now:%H%M}_${experiment_name}
+  sweep:
+    dir: ./exp_sweep/${now:%Y.%m.%d}/${now:%H%M}_${experiment}
+    subdir: ${hydra.job.num}
+  launcher:
+    timeout_min: 4300
+    cpus_per_task: 10
+    gpus_per_node: 1
+    tasks_per_node: 1
+    mem_gb: 160
+    nodes: 1
+    submitit_folder: ./exp_sweep/${now:%Y.%m.%d}/${now:%H%M}_${experiment}/.slurm

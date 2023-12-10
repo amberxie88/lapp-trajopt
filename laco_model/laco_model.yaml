@@ -1,0 +1,50 @@
+_target_: laco_model.lang_attention_model.LangAttentionModel
+name: lang_attention_model
+
+# infra
+device: ${device}
+lr: ${lr}
+weight_decay: 1e-1 
+scheduler: ${scheduler}
+schedule_every_step: ${schedule_every_step}
+normalize_state: true
+
+# model
+obs_encoder_id: clip16
+patch_size: 16
+threshold: 0.5
+use_mv: ${use_mv}
+state_dim: 7
+
+# transformer
+token_dim: 768
+dropout: 0
+n_layer: 2 # number of self-attention layers
+cross_attention: false
+bias: false
+n_head: 16
+attention_feat: average
+modality_embedding: true
+
+# language model
+encoder: clip16
+model_max_length: 53 
+freeze_language_encoder: true
+lang_embedding_dim: 512 # only used for lang_type_embedding=cat
+
+# architecture
+state_hidden_dim: [4096,4096,4096] 
+obs_n_filters: [3,128,256,512]
+pred_net_id: layers  
+net_hidden_dim: [512,256]
+shared_hidden_dim: 256
+state_setting: current # which states to use
+n_obs_attn_layer: 0 # additional attention layers for obs tokens (assume n_head)
+use_transformer_pos_emb: false
+
+# loss
+loss: BCE
+pred_coll_loss: false 
+alpha_coll_loss: 1 # weight for coll_change_loss
+pred_obj_in_scene_loss: false 
+alpha_pred_obj_in_scene_loss: 1 # weight for pred_obj_in_scene_loss
